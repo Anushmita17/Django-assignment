@@ -7,6 +7,6 @@ urlpatterns = [
     path('register/',views.RegisterView.as_view(), name ='register'),
     path('movies/',views.MovieView.as_view(),name= 'movies'),
     path('collection/',views.CollectionView.as_view(),name='collection'),
-    path(r'^collection/(?P<url_uuid>[0-9A-Za-z]+)$',views.CollectionUuidView.as_view(),name='collectionuuid')
+    path('collection/<uuid:url_uuid>/(',views.CollectionUuidView.as_view(),name='collectionuuid')
     
 ]

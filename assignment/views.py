@@ -1,20 +1,17 @@
-import collections
-from email import header
-from importlib.resources import contents
-from operator import contains
-from turtle import update
-from django.shortcuts import render
-from django.http import HttpResponse
-import requests
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 import jwt
-from assignment.models import MyCollection,MovieCollection
+
 from django.db.models import Count
+from django.http import HttpResponse
+import requests
 
 
-# Create your views here.
+
+from assignment.models import MyCollection,MovieCollection
+
+
 def index(request):
     url = 'https://demo.credy.in/api/v1/maya/movies/'
     header ={"Username":"iNd3jDMYRKsN1pjQPMRz2nrq7N99q4Tsp9EY9cM0",
@@ -29,7 +26,7 @@ def index(request):
 
 class RegisterView (APIView):
 
-    def post(self,request):
+    def post(self, request):
         user = request.data.get('username')
         password = request.data.get('password')
         if user and password:
@@ -38,9 +35,11 @@ class RegisterView (APIView):
 
             content = {'access_token':token}
             return Response(content)
+        raise Exception('Please enter valid username and password')
 
 
 class MovieView(APIView):
+    
     def get(self, request):
         url = 'https://demo.credy.in/api/v1/maya/movies/'
         header = {
@@ -97,6 +96,7 @@ class CollectionView(APIView):
 
 
 class CollectionUuidView(APIView):
+    
     def put(self,request,url_uuid):
         title = request.query_params.get('title')
         description = request.query_params.get('description')
